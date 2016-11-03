@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+[uwsgi]
+uid = www-data
+gid = www-data
+chmod-socket = 664
+chown-socket = www-data
+
+thread=3
+master=1
+wsgi-file = {{ app_dir }}/listentool/wsgi.py
+chdir = {{ app_dir }}
+socket = /tmp/listentool.sock
+logto = {{ app_dir }}/listentool.log
+vacuum=true

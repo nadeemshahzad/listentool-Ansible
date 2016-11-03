@@ -1,0 +1,25 @@
+---
+ - name: Copy Nodejs repo. script
+   copy: src=nodejs.repo dest=/tmp/nodejs.repo mode=755
+ - shell: /tmp/nodejs.repo
+ - name: Installing prerequisite
+   apt: pkg={{ item }} 
+   with_items:
+      - build-essential
+      - python3-dev 
+      - python3-pip
+      - python-psycopg2
+      - libpq-dev
+      - git
+      - ntp
+      - ruby
+      - nodejs=0.10.25~dfsg2-2ubuntu1
+      - nodejs-legacy=0.10.25~dfsg2-2ubuntu1
+      - npm=1.3.10~dfsg-1
+ - name: Install SaaS
+   gem: name=sass state=present
+ - name: bower install
+   npm: name=bower global=yes
+ - name: gulp install
+   npm: name=gulp global=yes
+

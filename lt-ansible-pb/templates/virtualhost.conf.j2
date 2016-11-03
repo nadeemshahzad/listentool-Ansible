@@ -1,0 +1,22 @@
+# {{ ansible_managed }}
+server {
+
+    listen      80 default_server;
+    charset     utf-8;
+
+    access_log  /var/log/nginx/{{ app_name }}_access.log;
+    error_log  /var/log/nginx/{{ app_name }}_error.log;
+
+    location /static {
+        alias {{ app_dir }}/static;
+    }
+    location /media  {
+        alias {{ app_dir }}/media;
+    }
+
+    location / {
+        uwsgi_pass unix:///tmp/listentool.sock;
+        include     uwsgi_params;
+        uwsgi_read_timeout 300;
+   }
+}

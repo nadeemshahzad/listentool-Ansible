@@ -1,0 +1,10 @@
+---
+ - include: essentials.yml
+ - include: nginx.yml
+ - include: pgsql.yml
+ - include: uwsgi.yml
+ - include: redis.yml
+ - include: supervisor.yml
+ - include: postfix.yml
+ - include: deployment.yml
+

@@ -1,0 +1,28 @@
+# {{ ansible_managed }}
+[program:listentool-celery]
+environment=PYTHONPATH={{ app_dir }}
+command=python3 /var/www/listentool/manage.py celery --app=listentool.apps_settings.celery:app worker -B  --loglevel=INFO
+directory={{ app_dir }}
+user=www-data
+numprocs=1
+stdout_logfile=/var/log/listentool/celery-worker.log
+stderr_logfile=/var/log/listentool/celery-worker-error.log
+
+#stdout_logfile=/var/log/celery-worker.log
+#stderr_logfile=/var/log/celery-worker.log
+autostart=true
+autorestart=true
+startsecs=10
+
+; Need to wait for currently executing tasks to finish at shutdown.
+; Increase this if you have very long running tasks.
+stopwaitsecs = 600
+
+; When resorting to send SIGKILL to the program to terminate it
+; send SIGKILL to its whole process group instead,
+; taking care of its children as well.
+killasgroup=true
+
+; if rabbitmq is supervised, set its priority higher
+; so it starts first
+priority=998

@@ -1,0 +1,20 @@
+---
+ - name: Copy requirements.txt 
+   copy: src=requirements.txt dest=/tmp/requirements.txt
+
+ - name: Install Python Requirements
+   command:  /usr/bin/pip3  install -r /tmp/requirements.txt 
+ - file: path={{ app_dir }} state=directory mode=0755 owner=www-data group=www-data
+ - name: Create Database user
+   sudo_user: postgres
+   postgresql_user: name={{db_user}} password={{db_password}}
+ - name: Create DB 
+   sudo_user: postgres
+   postgresql_db: name={{db_name}} encoding='UTF-8' owner={{db_user}}
+# - name: Copy npm build script
+#   copy: src=npmbuild.sh dest=/tmp/npmbuild.sh mode=755
+# - shell: /tmp/npmbuild.sh
+   notify: 
+     - Restart uWSGi
+     - Restart supervisor
+     - Restart Nginx

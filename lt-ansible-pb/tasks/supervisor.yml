@@ -1,0 +1,10 @@
+---
+
+ - name: Install  Supervisor
+   apt: pkg=supervisor state=installed
+ - name: Add Celery Config in Supervisor
+   template: src=listentool-celery.conf.j2 dest=/etc/supervisor/conf.d/listentool-celery.conf  owner=root group=root
+ - name: Add flower Config in Supervisor
+   template: src=flower.conf.j2 dest=/etc/supervisor/conf.d/flower.conf owner=root group=root
+ - name: Log Directory Creation for Celery and Flower
+   file: path=/var/log/listentool state=directory owner=www-data group=www-data

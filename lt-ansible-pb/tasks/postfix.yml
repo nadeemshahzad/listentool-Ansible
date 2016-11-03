@@ -1,0 +1,6 @@
+---
+  - name: Postfix Installation
+    apt:  pkg=postfix,mailutils state=installed
+  - name: Create Postfix Config
+    template: src=main.cf.j2 dest={{postfix_conf_dir}}/main.cf mode=0644 owner=root group=root
+    notify: Restart postfix

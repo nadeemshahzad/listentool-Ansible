@@ -1,0 +1,17 @@
+---
+
+ - name: Install uWSGI and uWSGI-plugin
+   apt: name={{ item }} state=latest
+   with_items:
+     - uwsgi
+     - uwsgi-plugin-python3
+
+ - name: Add uWSGi App Config
+   template: src=uwsgi.ini.j2 dest=/etc/uwsgi/apps-available/uwsgi.ini owner=root group=root
+   notify:
+     - Restart uWSGi
+
+ - name: Enable uWSGi App
+   file: src=/etc/uwsgi/apps-available/uwsgi.ini dest=/etc/uwsgi/apps-enabled/uwsgi.ini state=link
+   notify:
+     - Restart uWSGi

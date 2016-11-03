@@ -1,0 +1,11 @@
+---
+
+ app_name: listentool.com
+ app_dir:  /var/www/listentool
+ db_name: listentool
+ db_user: listentool
+ db_password: listentool 
+ connections: 1024
+ postfix_conf_dir: /etc/postfix
+ postfix_myhostname: listentool.com
+ 

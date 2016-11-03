@@ -1,0 +1,21 @@
+# {{ ansible_managed }}
+[program:listentool-flower]
+environment=PYTHONPATH={{ app_dir }}
+command=celery -A listentool.apps_settings.celery flower  --port=9000 --adress=0.0.0.0
+directory={{ app_dir }}
+user=www-data
+numprocs=1
+stdout_logfile=/var/log/listentool/flower-worker.log
+stderr_logfile=/var/log/listentool/flower-worker-error.log
+autostart=true
+autorestart=true
+startsecs=15
+
+; Need to wait for currently executing tasks to finish at shutdown.
+; Increase this if you have very long running tasks.
+stopwaitsecs = 600
+
+; When resorting to send SIGKILL to the program to terminate it
+; send SIGKILL to its whole process group instead,
+; taking care of its children as well.
+killasgroup=true
